@@ -9,10 +9,13 @@
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
 #import "TinkoffNews+CoreDataModel.h"
+#import "MasterViewModel.h"
 
 @class DetailViewController;
 
 @interface MasterViewController : UITableViewController <NSFetchedResultsControllerDelegate>
+
+@property (nonatomic, strong) MasterViewModel *viewModel;
 
 @property (strong, nonatomic) DetailViewController *detailViewController;
 
