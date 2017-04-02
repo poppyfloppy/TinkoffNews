@@ -75,6 +75,7 @@
     if ([bottomActivityIndicatorView isAnimating]) {
         [bottomActivityIndicatorView stopAnimating];
         [bottomActivityIndicatorView setHidden:YES];
+        self.tableView.tableFooterView = nil;
     }
     if ([self.refreshControl isRefreshing]) {
         [self.refreshControl endRefreshing];

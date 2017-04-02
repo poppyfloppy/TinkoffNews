@@ -12,6 +12,7 @@
 @interface StringUtils : NSObject
 
 + (NSAttributedString *)attributedStringWithHtmlString:(NSString *)string size:(NSUInteger)size weight:(CGFloat)weight;
++ (NSAttributedString *)attributedStringWithHtmlStringAndImages:(NSString *)string size:(NSUInteger)size weight:(CGFloat)weight;
 + (NSString *)stringFromDate:(NSDate *)date;
 
 @end

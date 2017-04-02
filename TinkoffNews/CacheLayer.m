@@ -12,8 +12,12 @@
 @implementation CacheLayer
 
 - (void)clearAll {
+    NSAssert([NSThread mainThread], @"Not main thread");
+    NSTimeInterval startTime = [[NSDate date] timeIntervalSince1970];
     [self clear:NSStringFromClass([NewsTitleModel class])];
     [self clear:NSStringFromClass([NewsModel class])];
+    NSTimeInterval endTime = [[NSDate date] timeIntervalSince1970];
+    NSLog(@"time clear: %f", endTime - startTime);
 }
 
 - (void)clear:(NSString *)class {
@@ -24,17 +28,22 @@
 }
 
 - (void)getNewsTitleWithCallback:(void (^)(NSArray *, NSError *))callback {
+    NSAssert([NSThread mainThread], @"Not main thread");
+    NSTimeInterval startTime = [[NSDate date] timeIntervalSince1970];
     NSError *error;
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:NSStringFromClass([NewsTitleModel class])];
     NSSortDescriptor *dateSort = [[NSSortDescriptor alloc] initWithKey:@"publicationDate" ascending:NO];
     [request setSortDescriptors:@[dateSort]];
     NSArray *newsTitlesArray = [[CoreDataStack defaultStack].managedObjectContext executeFetchRequest:request error:&error];
+    NSTimeInterval endTime = [[NSDate date] timeIntervalSince1970];
+    NSLog(@"time fetch: %f", endTime - startTime);
     dispatch_async(dispatch_get_main_queue(), ^{
         callback(newsTitlesArray, error);
     });
 }
 
 - (void)getNewsContentWith:(NSString *)newsId andCallback:(void (^)(NewsModel *, NSError *))callback {
+    NSAssert([NSThread mainThread], @"Not main thread");
     NSError *error;
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:NSStringFromClass([NewsModel class])];
     request.predicate = [NSPredicate predicateWithFormat:@"newsId = %@", newsId];
@@ -45,24 +54,27 @@
 }
 
 - (BOOL)addNewsTitles:(NSArray *)newsTitlesArray {
+    NSAssert([NSThread mainThread], @"Not main thread");
+    NSTimeInterval startTime = [[NSDate date] timeIntervalSince1970];
     for (NewsTitleEntity *newsTitleEntity in newsTitlesArray) {
-        [self addNewsTitle:newsTitleEntity];
+        [NewsTitleModel instanceWith:newsTitleEntity.newsId text:newsTitleEntity.text publicationDate:newsTitleEntity.publicationDate andContext:[CoreDataStack defaultStack].managedObjectContext];
     }
+    NSError *error = [[CoreDataStack defaultStack] saveContext];
+    NSTimeInterval endTime = [[NSDate date] timeIntervalSince1970];
+    NSLog(@"time add: %f", endTime - startTime);
     
-    return YES;
+    return !error;
 }
 
 - (BOOL)addNewsTitle:(NewsTitleEntity *)newsTitleEntity {
-    NewsTitleModel *newsTitleModel = [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass([NewsTitleModel class]) inManagedObjectContext:[CoreDataStack defaultStack].managedObjectContext];
-    newsTitleModel.newsId = newsTitleEntity.newsId;
-    newsTitleModel.text = newsTitleEntity.text;
-    newsTitleModel.publicationDate = newsTitleEntity.publicationDate;
+    [NewsTitleModel instanceWith:newsTitleEntity.newsId text:newsTitleEntity.text publicationDate:newsTitleEntity.publicationDate andContext:[CoreDataStack defaultStack].managedObjectContext];
     NSError *error = [[CoreDataStack defaultStack] saveContext];
     
     return !error;
 }
 
 - (BOOL)addNewsContent:(NewsEntity *)newsEntity {
+    NSAssert([NSThread mainThread], @"Not main thread");
     NewsModel *newsModel = [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass([NewsModel class]) inManagedObjectContext:[CoreDataStack defaultStack].managedObjectContext];
     newsModel.newsId = newsEntity.newsId;
     newsModel.text = newsEntity.text;

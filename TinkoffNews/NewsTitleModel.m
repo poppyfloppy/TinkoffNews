@@ -14,4 +14,13 @@
 @dynamic text;
 @dynamic publicationDate;
 
++ (instancetype)instanceWith:(NSString *)newsId text:(NSString *)text publicationDate:(NSDate *)publicationDate andContext:(NSManagedObjectContext *)context {
+    NewsTitleModel *newsTitleModel = [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass([NewsTitleModel class]) inManagedObjectContext:context];
+    newsTitleModel.newsId = newsId;
+    newsTitleModel.text = text;
+    newsTitleModel.publicationDate = publicationDate;
+    
+    return newsTitleModel;
+}
+
 @end
