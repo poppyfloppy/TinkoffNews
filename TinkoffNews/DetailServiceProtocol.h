@@ -7,10 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "NewsEntity.h"
+#import "NewsProtocol.h"
 
 @protocol DetailServiceProtocol <NSObject>
 
-- (void)getNewsContentWithNewsId:(NSString *)newsId andCallback:(void (^)(NewsEntity *, NSError *))callback;
+- (void)getNewsContentWithNewsId:(NSString *)newsId andCallback:(void (^)(id<NewsProtocol>, NSError *))callback;
 
 @end

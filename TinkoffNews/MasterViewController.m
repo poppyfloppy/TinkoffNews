@@ -41,7 +41,7 @@
 - (void)initTableView {
     [self.tableView setAlwaysBounceVertical:YES];
     [self.tableView registerNib:[UINib nibWithNibName:@"MasterTableViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:PAYLOAD_CELL];
-    self.tableView.estimatedRowHeight = 44.0;
+    self.tableView.estimatedRowHeight = 50.0;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
 }
 

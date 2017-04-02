@@ -23,35 +23,46 @@
 
 #pragma mark methods
 - (void)updateNewsWithCallback:(void (^)(NSArray *, NSError *))callback {
+    [self.cacheLayer clear];
     [self getNewsWithCallback:callback];
 }
 
 - (void)getNewsWithCallback:(void (^)(NSArray *, NSError *))callback {
-    [self.cacheLayer getNewsTitleWithCallback:^(NSArray *array, NSError *error) {
-        if (error) {
-            callback(nil, error);
+    [self.cacheLayer getNewsTitleWithCallback:^(NSArray *array1, NSError *error1) {
+        if (error1) {
+            callback(nil, error1);
+        } else if (array1.count > 0) {
+            callback(array1, nil);
         } else {
-            
-        }
-    }];
-    
-    [self.webLayer getNewsWithCallback:^(NSArray *array, NSError *error) {
-        if (error) {
-            callback(nil, error);
-        } else {
-            NSArray *newsTitleEntitiesArray = [self.newsTitleParser parseAll:array];
-            [self.cacheLayer addNewsTitles:newsTitleEntitiesArray];
-            callback(newsTitleEntitiesArray, nil);
+            [self.webLayer getNewsWithCallback:^(NSArray *array2, NSError *error2) {
+                if (error2) {
+                    callback(nil, error2);
+                } else {
+                    NSArray *newsTitleEntitiesArray = [self.newsTitleParser parseAll:array2];
+                    [self.cacheLayer addNewsTitles:newsTitleEntitiesArray];
+                    callback(newsTitleEntitiesArray, nil);
+                }
+            }];
         }
     }];
 }
 
-- (void)getNewsContentWithNewsId:(NSString *)newsId andCallback:(void (^)(NewsEntity *, NSError *))callback {
-    [self.webLayer getNewsContentWithId:newsId andCallback:^(NSDictionary *dict, NSError *error) {
-        if (error) {
-            callback(nil, error);
+- (void)getNewsContentWithNewsId:(NSString *)newsId andCallback:(void (^)(id<NewsProtocol>, NSError *))callback {
+    [self.cacheLayer getNewsContentWith:newsId andCallback:^(NewsModel *newsModel, NSError *error1) {
+        if (error1) {
+            callback(nil, error1);
+        } else if (newsModel) {
+            callback(newsModel, nil);
         } else {
-            callback([self.newsParser parse:dict], nil);
+            [self.webLayer getNewsContentWithId:newsId andCallback:^(NSDictionary *dict, NSError *error2) {
+                if (error2) {
+                    callback(nil, error2);
+                } else {
+                    NewsEntity *newsEntity = [self.newsParser parse:dict];
+                    [self.cacheLayer addNewsContent:newsEntity];
+                    callback([self.newsParser parse:dict], nil);
+                }
+            }];
         }
     }];
 }

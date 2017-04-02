@@ -10,6 +10,10 @@
 
 @implementation NewsTitleEntity
 
+@synthesize newsId = _newsId;
+@synthesize text = _text;
+@synthesize publicationDate = _publicationDate;
+
 - (instancetype)init {
     return [self initWith:nil text:nil andPublicationDate:0];
 }

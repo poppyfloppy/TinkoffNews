@@ -7,13 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "NewsProtocol.h"
 
-@interface NewsEntity : NSObject
-
-@property (nonatomic, strong) NSString *newsId;
-@property (nonatomic, strong) NSString *text;
-@property (nonatomic, strong) NSDate *creationDate;
-@property (nonatomic, strong) NSString *content;
+@interface NewsEntity : NSObject<NewsProtocol>
 
 - (instancetype)initWith:(NSString *)newsId text:(NSString *)text content:(NSString *)content andCreationDate:(long)ms;
 

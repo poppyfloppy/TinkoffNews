@@ -8,10 +8,15 @@
 
 #import "CacheLayer.h"
 #import "CoreDataStack.h"
-#import "NewsModel.h"
-#import "NewsTitleModel.h"
 
 @implementation CacheLayer
+
+- (void)clear {
+    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:NSStringFromClass([NewsTitleModel class])];
+    NSBatchDeleteRequest *delete = [[NSBatchDeleteRequest alloc] initWithFetchRequest:request];
+    NSError *deleteError = nil;
+    [[CoreDataStack defaultStack].persistentStoreCoordinator executeRequest:delete withContext:[CoreDataStack defaultStack].managedObjectContext error:&deleteError];
+}
 
 - (void)getNewsTitleWithCallback:(void (^)(NSArray *, NSError *))callback {
     NSError *error;
@@ -24,7 +29,7 @@
     });
 }
 
-- (void)getNewsContentWith:(NSString *)newsId andCallback:(void (^)(NSArray *, NSError *))callback {
+- (void)getNewsContentWith:(NSString *)newsId andCallback:(void (^)(NewsModel *, NSError *))callback {
     NSError *error;
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:NSStringFromClass([NewsModel class])];
     request.predicate = [NSPredicate predicateWithFormat:@"newsId = %@", newsId];
@@ -56,7 +61,7 @@
     NewsModel *newsModel = [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass([NewsModel class]) inManagedObjectContext:[CoreDataStack defaultStack].managedObjectContext];
     newsModel.newsId = newsEntity.newsId;
     newsModel.text = newsEntity.text;
-    newsModel.content = newsModel.content;
+    newsModel.content = newsEntity.content;
     newsModel.creationDate = newsEntity.creationDate;
     [[CoreDataStack defaultStack] saveContext];
     

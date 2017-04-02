@@ -74,6 +74,8 @@
 		3C025E0D1E910091000C665C /* NewsTitleModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsTitleModel.m; sourceTree = "<group>"; };
 		3C025E0F1E911E6E000C665C /* NewsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsModel.h; sourceTree = "<group>"; };
 		3C025E101E911E6E000C665C /* NewsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsModel.m; sourceTree = "<group>"; };
+		3C025E121E91240F000C665C /* NewsProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsProtocol.h; sourceTree = "<group>"; };
+		3C025E1F1E912E7C000C665C /* NewsTitleProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsTitleProtocol.h; sourceTree = "<group>"; };
 		3C75AE041E8BFA7C006CDC0D /* TinkoffNews.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TinkoffNews.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3C75AE081E8BFA7C006CDC0D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		3C75AE0A1E8BFA7C006CDC0D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -185,6 +187,8 @@
 				3C75AE441E8C57D8006CDC0D /* NewsEntity.m */,
 				3C025DFD1E907269000C665C /* NewsTitleEntity.h */,
 				3C025DFE1E907269000C665C /* NewsTitleEntity.m */,
+				3C025E121E91240F000C665C /* NewsProtocol.h */,
+				3C025E1F1E912E7C000C665C /* NewsTitleProtocol.h */,
 			);
 			name = Entity;
 			sourceTree = "<group>";

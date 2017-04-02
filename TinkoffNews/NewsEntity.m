@@ -10,6 +10,15 @@
 
 @implementation NewsEntity
 
+@synthesize newsId = _newsId;
+@synthesize text = _text;
+@synthesize content = _content;
+@synthesize creationDate = _creationDate;
+
+- (instancetype)init {
+    return [self initWith:nil text:nil content:nil andCreationDate:0];
+}
+
 - (instancetype)initWith:(NSString *)newsId text:(NSString *)text content:(NSString *)content andCreationDate:(long)ms {
     if (self = [super init]) {
         self.newsId = newsId;

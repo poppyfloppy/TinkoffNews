@@ -7,7 +7,7 @@
 //
 
 #import "MasterPresenter.h"
-#import "NewsTitleEntity.h"
+#import "NewsTitleProtocol.h"
 #import "StringUtils.h"
 
 @interface MasterPresenter () {
@@ -46,7 +46,7 @@
 - (NSArray *)proccessToViewData:(NSArray *)array {
     NSMutableArray *viewDataArray = [NSMutableArray arrayWithCapacity:array.count];
     for (int i = 0; i < array.count; ++i) {
-        NewsTitleEntity *newsTitleEntity = array[i];
+        id<NewsTitleProtocol> newsTitleEntity = array[i];
         MasterViewData *masterViewData = [MasterViewData new];
         masterViewData.date = [StringUtils stringFromDate:newsTitleEntity.publicationDate];
         masterViewData.title = [StringUtils attributedStringWithHtmlString:newsTitleEntity.text size:16.0 weight:UIFontWeightRegular];
@@ -57,7 +57,7 @@
 }
 
 - (void)didSelectAtIndex:(NSInteger)index {
-    NSString *newsId = ((NewsTitleEntity *)data[index]).newsId;
+    NSString *newsId = ((id<NewsTitleProtocol>)data[index]).newsId;
     [self.view toDetail:newsId];
 }
 

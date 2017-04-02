@@ -7,11 +7,8 @@
 //
 
 #import <CoreData/CoreData.h>
+#import "NewsTitleProtocol.h"
 
-@interface NewsTitleModel : NSManagedObject
-
-@property (nonatomic, strong) NSString *newsId;
-@property (nonatomic, strong) NSString *text;
-@property (nonatomic, strong) NSDate *publicationDate;
+@interface NewsTitleModel : NSManagedObject<NewsTitleProtocol>
 
 @end

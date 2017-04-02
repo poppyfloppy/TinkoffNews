@@ -18,7 +18,7 @@
     return self;
 }
 
-- (void)getNewsContentWithNewsId:(NSString *)newsId andCallback:(void (^)(NewsEntity *, NSError *))callback {
+- (void)getNewsContentWithNewsId:(NSString *)newsId andCallback:(void (^)(id<NewsProtocol>, NSError *))callback {
     [self.newsService getNewsContentWithNewsId:newsId andCallback:callback];
 }
 

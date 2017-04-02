@@ -9,11 +9,15 @@
 #import <Foundation/Foundation.h>
 #import "NewsEntity.h"
 #import "NewsTitleEntity.h"
+#import "NewsModel.h"
+#import "NewsTitleModel.h"
 
 @interface CacheLayer : NSObject
 
+- (void)clear;
+
 - (void)getNewsTitleWithCallback:(void (^)(NSArray *, NSError *))callback;
-- (void)getNewsContentWith:(NSString *)newsId andCallback:(void (^)(NSArray *, NSError *))callback;
+- (void)getNewsContentWith:(NSString *)newsId andCallback:(void (^)(NewsModel *, NSError *))callback;
 
 - (BOOL)addNewsTitles:(NSArray *)newsTitlesArray;
 - (BOOL)addNewsTitle:(NewsTitleEntity *)newsTitleEntity;

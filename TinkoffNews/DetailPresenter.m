@@ -14,7 +14,7 @@
 
 - (void)getContentNews {
     [self.view showLoading];
-    [self.model getNewsContentWithNewsId:self.newsId andCallback:^(NewsEntity *newsEntity, NSError *error) {
+    [self.model getNewsContentWithNewsId:self.newsId andCallback:^(id<NewsProtocol> newsEntity, NSError *error) {
         [self.view hideLoading];
         if (error) {
             [self.view showError];

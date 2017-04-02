@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "CacheLayer.h"
 #import "WebLayer.h"
-#import "NewsEntity.h"
+#import "NewsProtocol.h"
 #import "NewsTitleEntity.h"
 #import "NewsParser.h"
 #import "NewsTitleParser.h"
@@ -25,7 +25,7 @@
 
 - (void)updateNewsWithCallback:(void (^)(NSArray *, NSError *))callback;
 - (void)getNewsWithCallback:(void (^)(NSArray *, NSError *))callback;
-- (void)getNewsContentWithNewsId:(NSString *)newsId andCallback:(void (^)(NewsEntity *, NSError *))callback;
+- (void)getNewsContentWithNewsId:(NSString *)newsId andCallback:(void (^)(id<NewsProtocol>, NSError *))callback;
 
 
 @end
