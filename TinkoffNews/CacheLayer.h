@@ -14,7 +14,7 @@
 
 @interface CacheLayer : NSObject
 
-- (void)clear;
+- (void)clearAll;
 
 - (void)getNewsTitleWithCallback:(void (^)(NSArray *, NSError *))callback;
 - (void)getNewsContentWith:(NSString *)newsId andCallback:(void (^)(NewsModel *, NSError *))callback;

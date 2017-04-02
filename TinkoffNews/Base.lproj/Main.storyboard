@@ -88,7 +88,7 @@
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9ID-kG-R0w">
                                 <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Q0x-1z-4VO">
+                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Q0x-1z-4VO">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="322"/>
                                         <subviews>
                                             <label userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Title" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WKN-0T-Y5u">
@@ -162,6 +162,7 @@
                     <connections>
                         <outlet property="activityIndicator" destination="QIK-G4-PdZ" id="0Fl-P5-DjF"/>
                         <outlet property="contentTextView" destination="2rJ-st-L25" id="b6L-Be-cCq"/>
+                        <outlet property="contentView" destination="Q0x-1z-4VO" id="8W2-Z3-npn"/>
                         <outlet property="dateLabel" destination="zMx-sA-Qhb" id="2p5-3M-TVX"/>
                         <outlet property="titleLabel" destination="WKN-0T-Y5u" id="yBE-2x-3gd"/>
                     </connections>

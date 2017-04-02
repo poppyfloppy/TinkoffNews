@@ -11,8 +11,13 @@
 
 @implementation CacheLayer
 
-- (void)clear {
-    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:NSStringFromClass([NewsTitleModel class])];
+- (void)clearAll {
+    [self clear:NSStringFromClass([NewsTitleModel class])];
+    [self clear:NSStringFromClass([NewsModel class])];
+}
+
+- (void)clear:(NSString *)class {
+    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:class];
     NSBatchDeleteRequest *delete = [[NSBatchDeleteRequest alloc] initWithFetchRequest:request];
     NSError *deleteError = nil;
     [[CoreDataStack defaultStack].persistentStoreCoordinator executeRequest:delete withContext:[CoreDataStack defaultStack].managedObjectContext error:&deleteError];
@@ -21,7 +26,7 @@
 - (void)getNewsTitleWithCallback:(void (^)(NSArray *, NSError *))callback {
     NSError *error;
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:NSStringFromClass([NewsTitleModel class])];
-    NSSortDescriptor *dateSort = [[NSSortDescriptor alloc] initWithKey:@"publicationDate" ascending:YES];
+    NSSortDescriptor *dateSort = [[NSSortDescriptor alloc] initWithKey:@"publicationDate" ascending:NO];
     [request setSortDescriptors:@[dateSort]];
     NSArray *newsTitlesArray = [[CoreDataStack defaultStack].managedObjectContext executeFetchRequest:request error:&error];
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -52,9 +57,9 @@
     newsTitleModel.newsId = newsTitleEntity.newsId;
     newsTitleModel.text = newsTitleEntity.text;
     newsTitleModel.publicationDate = newsTitleEntity.publicationDate;
-    [[CoreDataStack defaultStack] saveContext];
+    NSError *error = [[CoreDataStack defaultStack] saveContext];
     
-    return YES;
+    return !error;
 }
 
 - (BOOL)addNewsContent:(NewsEntity *)newsEntity {
@@ -63,9 +68,9 @@
     newsModel.text = newsEntity.text;
     newsModel.content = newsEntity.content;
     newsModel.creationDate = newsEntity.creationDate;
-    [[CoreDataStack defaultStack] saveContext];
+    NSError *error = [[CoreDataStack defaultStack] saveContext];
     
-    return YES;
+    return !error;
 }
 
 @end

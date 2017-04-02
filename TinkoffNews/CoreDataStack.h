@@ -16,6 +16,6 @@
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 
 + (instancetype)defaultStack;
-- (void)saveContext;
+- (NSError *)saveContext;
 
 @end

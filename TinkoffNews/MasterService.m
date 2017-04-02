@@ -20,7 +20,7 @@
 
 #pragma mark methods
 - (void)getNewsWithCallback:(void (^)(NSArray *, NSError *))callback {
-    [self.newsService updateNewsWithCallback:callback];
+    [self.newsService getNewsWithCallback:callback];
 }
 
 - (void)updateNewsWithCallback:(void (^)(NSArray *, NSError *))callback {

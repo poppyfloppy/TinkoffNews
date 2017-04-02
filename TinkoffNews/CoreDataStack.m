@@ -29,7 +29,7 @@
     return stack;
 }
 
-- (void)saveContext {
+- (NSError *)saveContext {
     NSError *error = nil;
     NSManagedObjectContext *managedObjectContext = self.managedObjectContext;
     if (managedObjectContext != nil) {
@@ -40,6 +40,8 @@
             abort();
         }
     }
+    
+    return error;
 }
 
 #pragma mark - Core Data stack

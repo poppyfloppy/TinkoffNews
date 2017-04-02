@@ -14,6 +14,7 @@
     __weak IBOutlet UILabel *dateLabel;
     __weak IBOutlet UITextView *contentTextView;
     __weak IBOutlet UIActivityIndicatorView *activityIndicator;
+    __weak IBOutlet UIView *contentView;
 }
 
 @end
@@ -37,6 +38,7 @@
 
 #pragma mark view methods
 - (void)updateNewsContent:(DetailViewData *)detailViewData {
+    [contentView setHidden:NO];
     titleLabel.attributedText = detailViewData.title;
     dateLabel.text = detailViewData.date;
     contentTextView.attributedText = detailViewData.content;

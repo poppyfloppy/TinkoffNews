@@ -23,7 +23,7 @@
 
 #pragma mark methods
 - (void)updateNewsWithCallback:(void (^)(NSArray *, NSError *))callback {
-    [self.cacheLayer clear];
+    [self.cacheLayer clearAll];
     [self getNewsWithCallback:callback];
 }
 
