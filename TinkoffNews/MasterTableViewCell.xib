@@ -18,10 +18,9 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hhn-ve-aU2">
+                    <label userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Text" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hhn-ve-aU2">
                         <rect key="frame" x="10" y="10" width="263.5" height="23.5"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <string key="text">If you've done all the above and are still finding that performance is unacceptably slow when doing the constraint solving in tableView:heightForRowAtIndexPath:, you'll unfortunately need to implement some caching for cell heights. (This is the appr</string>
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -40,7 +39,7 @@
                     <constraint firstItem="hhn-ve-aU2" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="Og0-WU-vui"/>
                     <constraint firstAttribute="trailing" secondItem="yCp-Z0-MU9" secondAttribute="trailing" constant="10" id="Tii-AE-qoS"/>
                     <constraint firstItem="hhn-ve-aU2" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="Z8S-IU-0N4"/>
-                    <constraint firstAttribute="bottom" secondItem="hhn-ve-aU2" secondAttribute="bottom" constant="10" id="ijS-Em-aPe"/>
+                    <constraint firstAttribute="bottom" secondItem="hhn-ve-aU2" secondAttribute="bottom" constant="10" id="vOy-kn-hO4"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>

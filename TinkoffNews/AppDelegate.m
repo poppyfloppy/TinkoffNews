@@ -2,14 +2,15 @@
 //  AppDelegate.m
 //  TinkoffNews
 //
-//  Created by Valeriy on 29/03/2017.
+//  Created by Valeriy on 01/04/2017.
 //  Copyright © 2017 Valeriy. All rights reserved.
 //
 
 #import "AppDelegate.h"
 #import "CoreDataStack.h"
 #import "MasterViewController.h"
-#import "MasterViewModel.h"
+#import "MasterPresenter.h"
+#import "MasterService.h"
 
 @interface AppDelegate () <UISplitViewControllerDelegate>
 
@@ -20,9 +21,12 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     UINavigationController *navigationController = (UINavigationController *)self.window.rootViewController;
-    MasterViewController *controller = (MasterViewController *)navigationController.topViewController;
-    MasterViewModel *viewModel = [[MasterViewModel alloc] init];
-    controller.viewModel = viewModel;
+    MasterViewController *view = (MasterViewController *)navigationController.topViewController;
+    MasterPresenter *presenter = [[MasterPresenter alloc] init];
+    MasterService *model = [[MasterService alloc] init];
+    view.presenter = presenter;
+    presenter.view = view;
+    presenter.model = model;
 
     return YES;
 }

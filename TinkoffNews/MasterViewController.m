@@ -2,18 +2,25 @@
 //  MasterViewController.m
 //  TinkoffNews
 //
-//  Created by Valeriy on 29/03/2017.
+//  Created by Valeriy on 01/04/2017.
 //  Copyright © 2017 Valeriy. All rights reserved.
 //
 
 #import "MasterViewController.h"
 #import "MasterTableViewCell.h"
+#import "MasterViewData.h"
+
 #import "DetailViewController.h"
-#import "NewsInteractor.h"
+#import "DetailPresenter.h"
+#import "DetailService.h"
 
 #define PAYLOAD_CELL @"payload_cell"
 
-@interface MasterViewController ()
+@interface MasterViewController () {
+    UIActivityIndicatorView *bottomActivityIndicatorView;
+}
+
+@property (nonatomic, strong) NSArray *dataArray;
 
 @end
 
@@ -23,16 +30,11 @@
     [super viewDidLoad];
     [self initTableView];
     [self initRefreshControl];
-//    [self.viewModel updateData];
-    [self.viewModel addObserver:self forKeyPath:@"dataArray" options:NSKeyValueObservingOptionNew context:nil];
+    [self.presenter getNews];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-}
-
-- (void)dealloc {
-    [self.viewModel removeObserver:self forKeyPath:@"dataArray"];
 }
 
 #pragma mark init
@@ -47,43 +49,75 @@
     self.refreshControl = [[UIRefreshControl alloc] init];
     self.refreshControl.backgroundColor = [UIColor colorWithRed:254 / 255.0 green:214 / 255.0 blue:49 / 255.0 alpha:1.0];
     self.refreshControl.tintColor = [UIColor whiteColor];
-    [self.refreshControl addTarget:self action:@selector(updateData:) forControlEvents:UIControlEventValueChanged];
+    [self.refreshControl addTarget:self action:@selector(pullToRefresh:) forControlEvents:UIControlEventValueChanged];
 }
 
-- (void)updateData:(id)sender {
-    [self.viewModel updateData];
+- (void)pullToRefresh:(id)sender {
+    [self.presenter updateNews];
 }
 
-#pragma mark - KVO
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
-    if ([keyPath isEqualToString:@"dataArray"]) {
-        if ([self.refreshControl isRefreshing]) {
-            [self.refreshControl endRefreshing];
-        }
-        [self.tableView reloadData];
+#pragma mark ViewProtocol
+- (void)updateData:(NSArray *)dataArray {
+    _dataArray = dataArray;
+    [self.tableView reloadData];
+}
+
+- (void)showLoading {
+    if (!bottomActivityIndicatorView) {
+        bottomActivityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        bottomActivityIndicatorView.frame = CGRectMake(0, 0, self.view.frame.size.width, 40.0);
     }
+    [bottomActivityIndicatorView startAnimating];
+    self.tableView.tableFooterView = bottomActivityIndicatorView;
+}
+
+- (void)hideLoading {
+    if ([bottomActivityIndicatorView isAnimating]) {
+        [bottomActivityIndicatorView stopAnimating];
+        [bottomActivityIndicatorView setHidden:YES];
+    }
+    if ([self.refreshControl isRefreshing]) {
+        [self.refreshControl endRefreshing];
+    }
+}
+
+- (void)showError {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error" message:@"Ooops! Something went wrong. Will try later." preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+    }];
+    [alert addAction:cancelAction];
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
+- (void)toDetail:(NSString *)newsId {
+    NSDictionary *dict = [NSDictionary dictionaryWithObject:newsId forKey:@"newsId"];
+    [self performSegueWithIdentifier:@"showDetail" sender:dict];
 }
 
 #pragma mark - Segues
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([[segue identifier] isEqualToString:@"showDetail"]) {
-        //NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        //DetailViewController *controller = (DetailViewController *)[[segue destinationViewController] topViewController];
+        DetailViewController *view = (DetailViewController *)[segue destinationViewController];
+        DetailPresenter *presenter = [DetailPresenter new];
+        DetailService *model = [DetailService new];
+        presenter.view = view;
+        presenter.model = model;
+        presenter.newsId = sender[@"newsId"];
+        view.presenter = presenter;
     }
 }
 
 #pragma mark - Table View
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return [self.viewModel numberOfSections];
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self.viewModel numberOfItemsInSection:section];
+    return self.dataArray.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:PAYLOAD_CELL forIndexPath:indexPath];
-    
     return cell;
 }
 
@@ -92,8 +126,9 @@
 }
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
-    ((MasterTableViewCell *)cell).payloadLabel.attributedText = [self.viewModel titleAtIndexPath:indexPath];
-    ((MasterTableViewCell *)cell).dateLabel.text = [self.viewModel dateAtIndexPath:indexPath];
+    MasterViewData *masterViewData = self.dataArray[indexPath.row];
+    ((MasterTableViewCell *)cell).payloadLabel.attributedText = masterViewData.title;
+    ((MasterTableViewCell *)cell).dateLabel.text = masterViewData.date;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
@@ -101,7 +136,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self performSegueWithIdentifier:@"showDetail" sender:tableView];
+    [self.presenter didSelectAtIndex:indexPath.row];
 }
 
 @end

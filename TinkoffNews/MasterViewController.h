@@ -2,25 +2,17 @@
 //  MasterViewController.h
 //  TinkoffNews
 //
-//  Created by Valeriy on 29/03/2017.
+//  Created by Valeriy on 01/04/2017.
 //  Copyright © 2017 Valeriy. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
-#import <CoreData/CoreData.h>
-#import "TinkoffNews+CoreDataModel.h"
-#import "MasterViewModel.h"
+#import "MasterViewProtocol.h"
+#import "MasterPresenterProtocol.h"
 
-@class DetailViewController;
+@interface MasterViewController : UITableViewController <MasterViewProtocol>
 
-@interface MasterViewController : UITableViewController <NSFetchedResultsControllerDelegate>
-
-@property (nonatomic, strong) MasterViewModel *viewModel;
-
-@property (strong, nonatomic) DetailViewController *detailViewController;
-
-@property (strong, nonatomic) NSFetchedResultsController<Event *> *fetchedResultsController;
-@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+@property (nonatomic, strong) id<MasterPresenterProtocol> presenter;
 
 
 @end

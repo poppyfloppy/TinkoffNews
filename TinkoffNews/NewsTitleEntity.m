@@ -1,22 +1,22 @@
 //
-//  NewsModel.m
+//  NewsTitleEntity.m
 //  TinkoffNews
 //
-//  Created by Valeriy on 30/03/2017.
+//  Created by Valeriy on 02/04/2017.
 //  Copyright © 2017 Valeriy. All rights reserved.
 //
 
-#import "PayloadModel.h"
+#import "NewsTitleEntity.h"
 
-@implementation PayloadModel
+@implementation NewsTitleEntity
 
 - (instancetype)init {
     return [self initWith:nil text:nil andPublicationDate:0];
 }
 
-- (instancetype)initWith:(NSString *)payloadId text:(NSString *)text andPublicationDate:(long)ms {
+- (instancetype)initWith:(NSString *)newsId text:(NSString *)text andPublicationDate:(long)ms {
     if (self = [super init]) {
-        self.payloadId = payloadId;
+        self.newsId = newsId;
         self.text = text;
         self.publicationDate = [NSDate dateWithTimeIntervalSince1970:(ms / 1000.0)];
     }

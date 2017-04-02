@@ -1,9 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1" systemVersion="11A491" minimumToolsVersion="Automatic" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
-    <entity name="Event" representedClassName="Event" codeGenerationType="class">
-        <attribute name="timestamp" optional="YES" attributeType="Date"/>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="11759" systemVersion="16C67" minimumToolsVersion="Automatic" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
+    <entity name="NewsModel" representedClassName="NewsModel" syncable="YES" codeGenerationType="class">
+        <attribute name="content" attributeType="String" syncable="YES"/>
+        <attribute name="creationDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="newsId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="text" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="NewsTitleModel" representedClassName="NewsTitleModel" syncable="YES">
+        <attribute name="newsId" attributeType="String" syncable="YES"/>
+        <attribute name="publicationDate" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="text" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Event" positionX="261" positionY="189" width="128" height="60"/>
+        <element name="NewsModel" positionX="-63" positionY="-18" width="128" height="105"/>
+        <element name="NewsTitleModel" positionX="-54" positionY="-9" width="128" height="90"/>
     </elements>
 </model>
