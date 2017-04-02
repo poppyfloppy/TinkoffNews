@@ -60,7 +60,7 @@
                             <outlet property="delegate" destination="7bK-jq-Zjz" id="RA6-mI-bju"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Master" id="Zdf-7t-Un8"/>
+                    <navigationItem key="navigationItem" title="Лента Новостей" id="Zdf-7t-Un8"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <segue destination="wf2-Or-lKL" kind="show" identifier="showDetail" id="MRb-9g-oHh"/>
@@ -70,7 +70,7 @@
             </objects>
             <point key="canvasLocation" x="709" y="-630"/>
         </scene>
-        <!--Detail-->
+        <!--Новость-->
         <scene sceneID="xan-7C-kIV">
             <objects>
                 <viewController id="wf2-Or-lKL" customClass="DetailViewController" sceneMemberID="viewController">
@@ -157,7 +157,7 @@
                             <constraint firstAttribute="trailing" secondItem="9ID-kG-R0w" secondAttribute="trailing" id="w3t-Q0-OGx"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Detail" id="n2K-zn-tp3"/>
+                    <navigationItem key="navigationItem" title="Новость" id="n2K-zn-tp3"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="activityIndicator" destination="QIK-G4-PdZ" id="0Fl-P5-DjF"/>
